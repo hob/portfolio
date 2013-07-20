@@ -9,8 +9,8 @@
 		<div id="photoScroller">
 			<div class="photoWrapper photo2 animated"></div>
 			<div class="photoWrapper photo1 animated"></div>
-			<span id=""></span>
-			<span></span>
+			<span id="previousPhoto"></span>
+			<span id="nextPhoto"></span>
 		</div>
 		<nav>
 			<ul>
@@ -27,27 +27,49 @@
 	<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function(){
-			$('.photoWrapper').click(onPhotoClickRight);
+			$('#previousPhoto').click(previousPhoto);
+			$('#nextPhoto').click(nextPhoto);
 		});
-		function animateOut(div) {
-			div.removeClass("fadeInRightBig");
-			div.addClass("fadeOutLeftBig");
+		function animateOutNext(div) {
+			animate(div, "fadeOutLeftBig", true);
 		}
-		function animateIn(div) {
-			div.removeClass("fadeOutLeftBig");
-			div.addClass("fadeInRightBig");
+		function animateInNext(div) {
+			animate(div, "fadeInRightBig", false);
 		}
-		function onPhotoClickLeft() {
-			
+		function animateOutPrevious(div) {
+			animate(div, "fadeOutRightBig", true);
 		}
-		function onPhotoClickRight() {
-			div = $(this);
-			animateOut(div);
-			prev = div.prev();
-			if(!prev) {
-				prev = $(".photo1")
+		function animateInPrevious(div) {
+			animate(div, "fadeInLeftBig", false);
+		}
+		var currentPhoto = $(".photo1");
+		function previousPhoto() {
+			var prev = currentPhoto.prev();
+			if(prev) {
+				currentPhoto = prev
+				animateInPrevious(currentPhoto);
+			}else{
+				animate(currentPhoto, "wiggle", false);
 			}
-			animateIn(prev);
+		}
+		function nextPhoto() {
+			var next = currentPhoto.next();
+			if(next) {
+				animateOutNext(currentPhoto);
+				currentPhoto = next;
+			}else{
+				animate(currentPhoto, "wiggle" , false);
+			}
+		}
+		function animate(div, style, hide) {
+			div.removeClass("hidden");
+			div.addClass(style);
+			setTimeout(function () {
+				div.removeClass(style);
+				if(hide) {
+					div.addClass("hidden");
+				}
+			}, 1000);
 		}
 	</script>
 </html>

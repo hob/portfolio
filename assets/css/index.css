@@ -47,6 +47,22 @@ li.navItem:active {
 .photo2 {
 	background-image:url("../photos/seagull.jpg");
 }
+#previousPhoto {
+	position:absolute;
+	width:50%;
+	left:0px;
+	top:0px;
+	bottom:0px;
+	cursor:pointer;
+}
+#nextPhoto {
+	position:absolute;
+	width:50%;
+	left:50%;
+	top:0px;
+	bottom:0px;
+	cursor:pointer;
+}
 .hidden {
 	display:none;
 }
