@@ -1,0 +1,53 @@
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>Hob Spillane Photography</title>
+		<link rel="stylesheet" href="assets/css/animate.css" type="text/css">
+		<link rel="stylesheet" href="assets/css/index.css" type="text/css" >
+	</head>
+	<body>
+		<div id="photoScroller">
+			<div class="photoWrapper photo2 animated"></div>
+			<div class="photoWrapper photo1 animated"></div>
+			<span id=""></span>
+			<span></span>
+		</div>
+		<nav>
+			<ul>
+				<li class="navItem">Portfolio</li>
+				<li class="navItem">About</li>
+				<li class="navItem">Blog</li>
+				<li class="navItem">Contact</li>
+			</ul>
+		</nav>
+		<footer>
+			Copyright © 2013 Hob Spillane. All rights reserved.
+		</footer>
+	</body>
+	<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		$(document).ready(function(){
+			$('.photoWrapper').click(onPhotoClickRight);
+		});
+		function animateOut(div) {
+			div.removeClass("fadeInRightBig");
+			div.addClass("fadeOutLeftBig");
+		}
+		function animateIn(div) {
+			div.removeClass("fadeOutLeftBig");
+			div.addClass("fadeInRightBig");
+		}
+		function onPhotoClickLeft() {
+			
+		}
+		function onPhotoClickRight() {
+			div = $(this);
+			animateOut(div);
+			prev = div.prev();
+			if(!prev) {
+				prev = $(".photo1")
+			}
+			animateIn(prev);
+		}
+	</script>
+</html>
