@@ -1,0 +1,56 @@
+#photoScroller {
+	position:absolute;
+	top:0px;
+	left:0px;
+	bottom:0px;
+	right:0px;
+	overflow:hidden;
+}
+.photo {
+	position:absolute;
+	height:100%;
+	width:100%;
+	background-size:cover;
+	transition:All 1s ease;
+    -webkit-transition:All 1s;
+    -moz-transition:All 1s;
+    -o-transition:All 1s;}
+#photo1 {
+	background-image:url("../photos/dublin.jpg");
+}
+#photo2 {
+	background-image:url("../photos/seagull.jpg");
+}
+#previousPhoto {
+	position:absolute;
+	width:50%;
+	left:0px;
+	top:0px;
+	bottom:0px;
+}
+#nextPhoto {
+	position:absolute;
+	width:50%;
+	left:50%;
+	top:0px;
+	bottom:0px;
+}
+#previousArrow {
+	position:absolute;
+	top:42%;
+	left:10px;
+}
+#nextArrow {
+	position:absolute;
+	top:42%;
+	right:10px;
+}
+.hidden {
+	display:none;
+}
+.dismissed {
+	transform:translate(-100%);
+}
+.clickable {
+	cursor:pointer;
+}

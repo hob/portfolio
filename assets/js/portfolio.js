@@ -1,20 +1,31 @@
 function init() {
 	var previousPhotoClickTarget = $('#previousPhoto');
 	previousPhotoClickTarget.click(previousPhoto);
-	previousPhotoClickTarget.mouseover(function() {
-		$('#previousArrow').removeClass('hidden');
-	});
-	previousPhotoClickTarget.mouseout(function() {
-		$('#previousArrow').addClass('hidden');
-	});
+	previousPhotoClickTarget.mouseover(onPreviousPhotoMouseOver);
+	previousPhotoClickTarget.mouseout(onPreviousPhotoMouseOut);
+
 	var nextPhotoClickTarget = $('#nextPhoto');
 	nextPhotoClickTarget.click(nextPhoto);
-	nextPhotoClickTarget.mouseover(function() {
+	nextPhotoClickTarget.mouseover(onNextPhotoMouseOver);
+	nextPhotoClickTarget.mouseout(onNextPhotoMouseOut);
+}
+function onPreviousPhotoMouseOver() {
+	var prev = getPreviousPhoto();
+	if(prev) {
+		$('#previousArrow').removeClass('hidden');
+	}
+}
+function onPreviousPhotoMouseOut() {
+	$('#previousArrow').addClass('hidden');
+}
+function onNextPhotoMouseOver() {
+	var next = getNextPhoto();
+	if(next) {
 		$('#nextArrow').removeClass('hidden');
-	});
-	nextPhotoClickTarget.mouseout(function() {
-		$('#nextArrow').addClass('hidden');
-	});
+	}
+}
+function onNextPhotoMouseOut() {
+	$('#nextArrow').addClass('hidden');
 }
 function animateOutCurrent(div) {
 	div.addClass("dismissed");
@@ -24,21 +35,40 @@ function animateInPrevious(div) {
 }
 var currentPhoto = $("#photo1");
 function previousPhoto() {
-	var prev = currentPhoto.prev();
+	var prev = getPreviousPhoto();
 	if(prev) {
 		currentPhoto = prev;
 		animateInPrevious(currentPhoto);
-	}else{
-		animate(currentPhoto, "wiggle", false);
+	}
+	if(!getPreviousPhoto()) {
+		$('#previousArrow').addClass('hidden');
 	}
 }
 function nextPhoto() {
-	var next = currentPhoto.next();
+	var next = getNextPhoto();
 	if(next) {
 		animateOutCurrent(currentPhoto);
 		currentPhoto = next;
+	}
+	onNextPhotoMouseOver();
+	if(!getNextPhoto()) {
+		$('#nextArrow').addClass('hidden');
+	}
+}
+function getNextPhoto() {
+	var next = currentPhoto.prev();
+	if(next.length > 0) {
+		return next;
 	}else{
-		animate(currentPhoto, "wiggle" , false);
+		return null;
+	}
+}
+function getPreviousPhoto() {
+	var prev = currentPhoto.next();
+	if(prev.length > 0) {
+		return prev;
+	}else{
+		return null;
 	}
 }
 init();
