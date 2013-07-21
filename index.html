@@ -30,14 +30,8 @@
 			$('#previousPhoto').click(previousPhoto);
 			$('#nextPhoto').click(nextPhoto);
 		});
-		function animateOutNext(div) {
+		function animateOutCurrent(div) {
 			animate(div, "fadeOutLeftBig", true);
-		}
-		function animateInNext(div) {
-			animate(div, "fadeInRightBig", false);
-		}
-		function animateOutPrevious(div) {
-			animate(div, "fadeOutRightBig", true);
 		}
 		function animateInPrevious(div) {
 			animate(div, "fadeInLeftBig", false);
@@ -55,7 +49,7 @@
 		function nextPhoto() {
 			var next = currentPhoto.next();
 			if(next) {
-				animateOutNext(currentPhoto);
+				animateOutCurrent(currentPhoto);
 				currentPhoto = next;
 			}else{
 				animate(currentPhoto, "wiggle" , false);
