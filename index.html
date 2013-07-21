@@ -2,15 +2,18 @@
 	<head>
 		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
 		<title>Hob Spillane Photography</title>
-		<link rel="stylesheet" href="assets/css/animate.css" type="text/css">
 		<link rel="stylesheet" href="assets/css/index.css" type="text/css" >
 	</head>
 	<body>
 		<div id="photoScroller">
-			<div class="photoWrapper photo2 animated"></div>
-			<div class="photoWrapper photo1 animated"></div>
-			<span id="previousPhoto"></span>
-			<span id="nextPhoto"></span>
+			<div class="photo" id="photo2"></div>
+			<div class="photo" id="photo1"></div>
+			<span id="previousPhoto">
+				<img src="assets/images/previous_arrow.png" id="previousArrow" class="hidden"/>
+			</span>
+			<span id="nextPhoto">
+				<img src="assets/images/next_arrow.png" id="nextArrow" class="hidden"/>
+			</span>
 		</div>
 		<nav>
 			<ul>
@@ -27,20 +30,37 @@
 	<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		$(document).ready(function(){
-			$('#previousPhoto').click(previousPhoto);
-			$('#nextPhoto').click(nextPhoto);
+			init();
 		});
+		function init() {
+			var previousPhotoClickTarget = $('#previousPhoto');
+			previousPhotoClickTarget.click(previousPhoto);
+			previousPhotoClickTarget.mouseover(function() {
+				$('#previousArrow').removeClass('hidden');
+			});
+			previousPhotoClickTarget.mouseout(function() {
+				$('#previousArrow').addClass('hidden');
+			});
+			var nextPhotoClickTarget = $('#nextPhoto');
+			nextPhotoClickTarget.click(nextPhoto);
+			nextPhotoClickTarget.mouseover(function() {
+				$('#nextArrow').removeClass('hidden');
+			});
+			nextPhotoClickTarget.mouseout(function() {
+				$('#nextArrow').addClass('hidden');
+			});
+		}
 		function animateOutCurrent(div) {
-			animate(div, "fadeOutLeftBig", true);
+			div.addClass("dismissed");
 		}
 		function animateInPrevious(div) {
-			animate(div, "fadeInLeftBig", false);
+			div.removeClass("dismissed");
 		}
-		var currentPhoto = $(".photo1");
+		var currentPhoto = $("#photo1");
 		function previousPhoto() {
 			var prev = currentPhoto.prev();
 			if(prev) {
-				currentPhoto = prev
+				currentPhoto = prev;
 				animateInPrevious(currentPhoto);
 			}else{
 				animate(currentPhoto, "wiggle", false);
@@ -54,16 +74,6 @@
 			}else{
 				animate(currentPhoto, "wiggle" , false);
 			}
-		}
-		function animate(div, style, hide) {
-			div.removeClass("hidden");
-			div.addClass(style);
-			setTimeout(function () {
-				div.removeClass(style);
-				if(hide) {
-					div.addClass("hidden");
-				}
-			}, 1000);
 		}
 	</script>
 </html>
