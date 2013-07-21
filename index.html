@@ -4,76 +4,21 @@
 		<title>Hob Spillane Photography</title>
 		<link rel="stylesheet" href="assets/css/index.css" type="text/css" >
 	</head>
-	<body>
-		<div id="photoScroller">
-			<div class="photo" id="photo2"></div>
-			<div class="photo" id="photo1"></div>
-			<span id="previousPhoto">
-				<img src="assets/images/previous_arrow.png" id="previousArrow" class="hidden"/>
-			</span>
-			<span id="nextPhoto">
-				<img src="assets/images/next_arrow.png" id="nextArrow" class="hidden"/>
-			</span>
-		</div>
+	<body onload="onLoad()">
+		<div id="contentPane"></div>
 		<nav>
 			<ul>
-				<li class="navItem">Portfolio</li>
-				<li class="navItem">About</li>
-				<li class="navItem">Blog</li>
-				<li class="navItem">Contact</li>
+				<a href="#portfolio.html"><li class="navItem">Portfolio</li></a>
+				<a href="#about.html"><li class="navItem">About</li></a>
+				<a href="#blog.html"><li class="navItem">Blog</li></a>
+				<a href="#contact.html"><li class="navItem">Contact</li></a>
 			</ul>
 		</nav>
 		<footer>
 			Copyright © 2013 Hob Spillane. All rights reserved.
 		</footer>
 	</body>
-	<script type="text/javascript" charset="utf-8" src="http://code.jquery.com/jquery-latest.min.js"></script>
-	<script type="text/javascript" charset="utf-8">
-		$(document).ready(function(){
-			init();
-		});
-		function init() {
-			var previousPhotoClickTarget = $('#previousPhoto');
-			previousPhotoClickTarget.click(previousPhoto);
-			previousPhotoClickTarget.mouseover(function() {
-				$('#previousArrow').removeClass('hidden');
-			});
-			previousPhotoClickTarget.mouseout(function() {
-				$('#previousArrow').addClass('hidden');
-			});
-			var nextPhotoClickTarget = $('#nextPhoto');
-			nextPhotoClickTarget.click(nextPhoto);
-			nextPhotoClickTarget.mouseover(function() {
-				$('#nextArrow').removeClass('hidden');
-			});
-			nextPhotoClickTarget.mouseout(function() {
-				$('#nextArrow').addClass('hidden');
-			});
-		}
-		function animateOutCurrent(div) {
-			div.addClass("dismissed");
-		}
-		function animateInPrevious(div) {
-			div.removeClass("dismissed");
-		}
-		var currentPhoto = $("#photo1");
-		function previousPhoto() {
-			var prev = currentPhoto.prev();
-			if(prev) {
-				currentPhoto = prev;
-				animateInPrevious(currentPhoto);
-			}else{
-				animate(currentPhoto, "wiggle", false);
-			}
-		}
-		function nextPhoto() {
-			var next = currentPhoto.next();
-			if(next) {
-				animateOutCurrent(currentPhoto);
-				currentPhoto = next;
-			}else{
-				animate(currentPhoto, "wiggle" , false);
-			}
-		}
-	</script>
+	<script type="text/javascript" charset="utf-8" src="assets/js/jquery.js"></script>
+	<script type="text/javascript" src="assets/js/jquery-hashchange.min.js"></script>
+	<script type="text/javascript" charset="utf-8" src="assets/js/index.js"></script>
 </html>

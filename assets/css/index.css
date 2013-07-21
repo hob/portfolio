@@ -16,6 +16,12 @@ nav > ul {
 	margin:0px;
 	padding-left:0px;
 }
+nav a {
+	color:white;
+}
+nav a:visited {
+	color:white;
+}
 li.navItem {
 	display:inline-block;
 	padding:15px;
@@ -41,9 +47,9 @@ li.navItem:active {
 	width:100%;
 	background-size:cover;
 	transition:All 1s ease;
-    -webkit-transition:All 1s ease;
-    -moz-transition:All 1s ease;
-    -o-transition:All 1s ease;}
+    -webkit-transition:All 1s;
+    -moz-transition:All 1s;
+    -o-transition:All 1s;}
 #photo1 {
 	background-image:url("../photos/dublin.jpg");
 }
