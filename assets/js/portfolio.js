@@ -8,6 +8,7 @@ function init() {
 	nextPhotoClickTarget.click(nextPhoto);
 	nextPhotoClickTarget.mouseover(onNextPhotoMouseOver);
 	nextPhotoClickTarget.mouseout(onNextPhotoMouseOut);
+	loadPhotos();
 }
 function onPreviousPhotoMouseOver() {
 	var prev = getPreviousPhoto();
@@ -39,7 +40,7 @@ function animateOutCurrent(div) {
 function animateInPrevious(div) {
 	div.removeClass("dismissed");
 }
-var currentPhoto = $("#photo1");
+var currentPhoto;
 function previousPhoto() {
 	var prev = getPreviousPhoto();
 	if(prev) {
@@ -78,5 +79,28 @@ function getPreviousPhoto() {
 	}else{
 		return null;
 	}
+}
+function loadPhotos() {
+	var container = $('#photoScroller');
+    var apiKey = '55ee2fd5b04b436eb07f894a8f8213e2';
+    var userId = '67916954@N00';
+	var set = '72157634736643500';
+	var flickrBaseURI = 'http://api.flickr.com/services/rest/?format=json';
+
+    $.getJSON(flickrBaseURI + '&method=flickr.photosets.getPhotos&api_key=' + apiKey + '&user_id=' + userId + '&photoset_id=' + set + '&extras=tags' + '&jsoncallback=?', 
+    function(data){
+        $.each(data.photoset.photo, function(i, rPhoto){
+          var basePhotoURL = 'http://farm' + rPhoto.farm + '.static.flickr.com/' + rPhoto.server + '/' + rPhoto.id + '_' + rPhoto.secret;            
+
+            var thumbPhotoURL = basePhotoURL + '_s.jpg';
+            var mediumPhotoURL = basePhotoURL + '.jpg';
+			var largePhotoURL = basePhotoURL + '_b.jpg';
+
+			var photoDiv = $('<div class="photo" style="background-image:url(\'' + largePhotoURL + '\');"></div>');
+
+			container.prepend(photoDiv);
+        });
+		currentPhoto = $('.photo:last-child');
+    });
 }
 init();
