@@ -13,6 +13,9 @@ function onPreviousPhotoMouseOver() {
 	var prev = getPreviousPhoto();
 	if(prev) {
 		$('#previousArrow').removeClass('hidden');
+		$('#previousPhoto').addClass('clickable');
+	}else{
+		$('#previousPhoto').removeClass('clickable');
 	}
 }
 function onPreviousPhotoMouseOut() {
@@ -22,6 +25,9 @@ function onNextPhotoMouseOver() {
 	var next = getNextPhoto();
 	if(next) {
 		$('#nextArrow').removeClass('hidden');
+		$('#nextPhoto').addClass('clickable');
+	}else{
+		$('#nextPhoto').removeClass('clickable');
 	}
 }
 function onNextPhotoMouseOut() {
@@ -42,6 +48,7 @@ function previousPhoto() {
 	}
 	if(!getPreviousPhoto()) {
 		$('#previousArrow').addClass('hidden');
+		$('#previousPhoto').removeClass('clickable');
 	}
 }
 function nextPhoto() {
@@ -53,6 +60,7 @@ function nextPhoto() {
 	onNextPhotoMouseOver();
 	if(!getNextPhoto()) {
 		$('#nextArrow').addClass('hidden');
+		$('#nextPhoto').removeClass('clickable');
 	}
 }
 function getNextPhoto() {
