@@ -34,18 +34,13 @@ function onNextPhotoMouseOver() {
 function onNextPhotoMouseOut() {
 	$('#nextArrow').addClass('hidden');
 }
-function animateOutCurrent(div) {
-	div.addClass("dismissed");
-}
-function animateInPrevious(div) {
-	div.removeClass("dismissed");
-}
 var currentPhoto;
 function previousPhoto() {
 	var prev = getPreviousPhoto();
 	if(prev) {
+		currentPhoto.addClass('unseen');
 		currentPhoto = prev;
-		animateInPrevious(currentPhoto);
+		currentPhoto.removeClass("dismissed");
 	}
 	if(!getPreviousPhoto()) {
 		$('#previousArrow').addClass('hidden');
@@ -55,8 +50,9 @@ function previousPhoto() {
 function nextPhoto() {
 	var next = getNextPhoto();
 	if(next) {
-		animateOutCurrent(currentPhoto);
+		currentPhoto.addClass("dismissed");
 		currentPhoto = next;
+		currentPhoto.removeClass('unseen');
 	}
 	onNextPhotoMouseOver();
 	if(!getNextPhoto()) {
@@ -96,11 +92,12 @@ function loadPhotos() {
             var mediumPhotoURL = basePhotoURL + '.jpg';
 			var largePhotoURL = basePhotoURL + '_b.jpg';
 
-			var photoDiv = $('<div class="photo" style="background-image:url(\'' + largePhotoURL + '\');"></div>');
+			var photoDiv = $('<div class="photo unseen" style="background-image:url(\'' + largePhotoURL + '\');"></div>');
 
 			container.prepend(photoDiv);
         });
 		currentPhoto = $('.photo:last-child');
+		currentPhoto.removeClass('unseen');
     });
 }
 init();

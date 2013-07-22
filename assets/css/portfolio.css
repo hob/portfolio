@@ -48,8 +48,11 @@
 .hidden {
 	display:none;
 }
+.unseen {
+	opacity:0;
+}
 .dismissed {
-	transform:translate(-100%);
+	opacity:0;
 }
 .clickable {
 	cursor:pointer;
