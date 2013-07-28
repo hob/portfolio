@@ -10,16 +10,14 @@
 	position:absolute;
 	height:100%;
 	width:100%;
-	background-size:cover;
+	background-size:contain;
+	background-repeat:no-repeat;
+	background-position:center;
+	background-color:#000;
 	transition:All 1s ease;
     -webkit-transition:All 1s;
     -moz-transition:All 1s;
-    -o-transition:All 1s;}
-#photo1 {
-	background-image:url("../photos/dublin.jpg");
-}
-#photo2 {
-	background-image:url("../photos/seagull.jpg");
+    -o-transition:All 1s;
 }
 #previousPhoto {
 	position:absolute;

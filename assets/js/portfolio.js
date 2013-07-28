@@ -59,6 +59,9 @@ function nextPhoto() {
 		$('#nextArrow').addClass('hidden');
 		$('#nextPhoto').removeClass('clickable');
 	}
+	//Load the url into the one behind the one that's becoming current
+	//so the image isn't loading while we're trying to transition to it
+	activatePhoto(getNextPhoto());
 }
 function getNextPhoto() {
 	var next = currentPhoto.prev();
@@ -92,12 +95,27 @@ function loadPhotos() {
             var mediumPhotoURL = basePhotoURL + '.jpg';
 			var largePhotoURL = basePhotoURL + '_b.jpg';
 
-			var photoDiv = $('<div class="photo unseen" style="background-image:url(\'' + largePhotoURL + '\');"></div>');
-
+			var photoDiv = $('<div class="photo unseen"></div>');
 			container.prepend(photoDiv);
+			jQuery.data(photoDiv[0], 'photo', largePhotoURL);
         });
 		currentPhoto = $('.photo:last-child');
 		currentPhoto.removeClass('unseen');
+		activatePhoto(currentPhoto);
+		//Queue up photo #2 so it's not loading while the user is switching to it
+		activatePhoto(currentPhoto.prev());
     });
+}
+/**
+*  Moves the photo url from the div's data to it's background-image url.  An
+*  optimiztion to keep from having to load all images at once and slow down
+*  the gallery's load time.
+*/
+function activatePhoto(photoDiv){
+	var url = jQuery.data(photoDiv[0], 'photo');
+	if(url) {
+		$(photoDiv).css('background-image', 'url(' + url + ')');
+		jQuery.removeData(photoDiv[0], 'photo');
+	}
 }
 init();
