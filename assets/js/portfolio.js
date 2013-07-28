@@ -1,38 +1,9 @@
 function init() {
 	var previousPhotoClickTarget = $('#previousPhoto');
-	previousPhotoClickTarget.click(previousPhoto);
-	previousPhotoClickTarget.mouseover(onPreviousPhotoMouseOver);
-	previousPhotoClickTarget.mouseout(onPreviousPhotoMouseOut);
-
 	var nextPhotoClickTarget = $('#nextPhoto');
+	previousPhotoClickTarget.click(previousPhoto);
 	nextPhotoClickTarget.click(nextPhoto);
-	nextPhotoClickTarget.mouseover(onNextPhotoMouseOver);
-	nextPhotoClickTarget.mouseout(onNextPhotoMouseOut);
-	loadPhotos();
-}
-function onPreviousPhotoMouseOver() {
-	var prev = getPreviousPhoto();
-	if(prev) {
-		$('#previousArrow').removeClass('hidden');
-		$('#previousPhoto').addClass('clickable');
-	}else{
-		$('#previousPhoto').removeClass('clickable');
-	}
-}
-function onPreviousPhotoMouseOut() {
-	$('#previousArrow').addClass('hidden');
-}
-function onNextPhotoMouseOver() {
-	var next = getNextPhoto();
-	if(next) {
-		$('#nextArrow').removeClass('hidden');
-		$('#nextPhoto').addClass('clickable');
-	}else{
-		$('#nextPhoto').removeClass('clickable');
-	}
-}
-function onNextPhotoMouseOut() {
-	$('#nextArrow').addClass('hidden');
+	loadPhotos(function() {setArrowState();});
 }
 var currentPhoto;
 function previousPhoto() {
@@ -42,10 +13,7 @@ function previousPhoto() {
 		currentPhoto = prev;
 		currentPhoto.removeClass("dismissed");
 	}
-	if(!getPreviousPhoto()) {
-		$('#previousArrow').addClass('hidden');
-		$('#previousPhoto').removeClass('clickable');
-	}
+	setArrowState();
 }
 function nextPhoto() {
 	var next = getNextPhoto();
@@ -54,14 +22,13 @@ function nextPhoto() {
 		currentPhoto = next;
 		currentPhoto.removeClass('unseen');
 	}
-	onNextPhotoMouseOver();
-	if(!getNextPhoto()) {
-		$('#nextArrow').addClass('hidden');
-		$('#nextPhoto').removeClass('clickable');
-	}
 	//Load the url into the one behind the one that's becoming current
 	//so the image isn't loading while we're trying to transition to it
-	activatePhoto(getNextPhoto());
+	var photo = getNextPhoto();
+	if(photo) {
+		activatePhoto(photo);
+	}
+	setArrowState();
 }
 function getNextPhoto() {
 	var next = currentPhoto.prev();
@@ -79,7 +46,25 @@ function getPreviousPhoto() {
 		return null;
 	}
 }
-function loadPhotos() {
+function setArrowState() {
+	var prev = getPreviousPhoto();
+	if(prev) {
+		$('#previousArrow').removeClass('hidden');
+		$('#previousPhoto').addClass('clickable');
+	}else{
+		$('#previousArrow').addClass('hidden');
+		$('#previousPhoto').removeClass('clickable');
+	}
+	var next = getNextPhoto();
+	if(next) {
+		$('#nextArrow').removeClass('hidden');
+		$('#nextPhoto').addClass('clickable');
+	}else{
+		$('#nextArrow').addClass('hidden');
+		$('#nextPhoto').removeClass('clickable');
+	}
+}
+function loadPhotos(callback) {
 	var container = $('#photoScroller');
     var apiKey = '55ee2fd5b04b436eb07f894a8f8213e2';
     var userId = '67916954@N00';
@@ -104,6 +89,7 @@ function loadPhotos() {
 		activatePhoto(currentPhoto);
 		//Queue up photo #2 so it's not loading while the user is switching to it
 		activatePhoto(currentPhoto.prev());
+		callback();
     });
 }
 /**
